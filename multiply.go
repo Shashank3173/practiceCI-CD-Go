@@ -7,5 +7,5 @@ func Product(a, b int) int {
 }
 func main() {
 	result := Product(4, 5)
-	fmt.Println("Product: ",result)
+	fmt.Println("Product: ",result )
 }
