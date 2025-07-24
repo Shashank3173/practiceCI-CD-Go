@@ -1,0 +1,35 @@
+name: Go CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-test-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: 1.21
+
+    - name: Run tests
+      run: go test -v ./...
+
+    - name: Build executable
+      run: go build -o product main.go
+
+    - name: Create ZIP
+      run: zip product.zip product
+
+    - name: Upload ZIP as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: product-zip
+        path: product.zip
